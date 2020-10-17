@@ -26,6 +26,19 @@ public class TimerActivity extends AppCompatActivity {
         AutoCompleteTextView textView1 = (AutoCompleteTextView)
                 findViewById(R.id.To);
         textView.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        AutoCompleteTextView textView2 = (AutoCompleteTextView)
+                findViewById(R.id.Method);
+        textView.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        AutoCompleteTextView textView3 = (AutoCompleteTextView)
+                findViewById(R.id.Required);
+        textView.setAdapter(adapter);
+
     }
 
     private static final String[] COUNTRIES = new String[] {

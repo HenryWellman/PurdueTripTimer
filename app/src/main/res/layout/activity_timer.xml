@@ -7,15 +7,16 @@
     tools:context=".TimerActivity">
 
     <AutoCompleteTextView
-        android:id="@+id/To"
+        android:id="@+id/From"
         android:layout_width="231dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFrom"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textViewFrom"
-        app:layout_constraintTop_toTopOf="@+id/textViewFrom"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.107" />
 
     <TextView
         android:id="@+id/textViewFrom"
@@ -34,15 +35,14 @@
         android:id="@+id/textViewTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="To: "
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewTravelMethod"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewFrom"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.23" />
 
     <TextView
         android:id="@+id/textViewTravelMethod"
@@ -50,8 +50,12 @@
         android:layout_height="wrap_content"
         android:text="Travel Method: "
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="257dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.373" />
 
     <TextView
         android:id="@+id/textViewTimeRequired"
@@ -59,18 +63,47 @@
         android:layout_height="wrap_content"
         android:text="Time Required: "
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="57dp"
-        tools:layout_editor_absoluteY="315dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.177"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.458" />
 
     <AutoCompleteTextView
         android:id="@+id/To"
         android:layout_width="231dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewTo"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/textViewTo"
-        app:layout_constraintTop_toTopOf="@+id/textViewTo"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.223" />
+
+    <AutoCompleteTextView
+        android:id="@+id/Method"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewTravelMethod"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.367" />
+
+    <AutoCompleteTextView
+        android:id="@+id/Required"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textViewTimeRequired"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.459" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
