@@ -66,8 +66,7 @@ public class TimerActivity extends FragmentActivity {
         else
             timeText = chronometer.getText();
 
-        // start if time = 0
-        //if (timeText.equals("00:00")) {
+        // if the timer is not yet clicked
             if(!timerStarted) {
             chronometer = findViewById(R.id.chronometer1);
             // Elapsed real time returns the milli seconds since boot, including time spent in sleep
@@ -84,7 +83,7 @@ public class TimerActivity extends FragmentActivity {
             timeStatusText.setText("");
 
         } else {
-            // stop when time > 0 and hide button
+            // stop when timer has been "started"
             chronometer.stop();
             startStopButton.setVisibility(Button.INVISIBLE);
             submitButton.setVisibility(Button.VISIBLE);
