@@ -1,5 +1,7 @@
 package com.purduetriptimer;
 
+import android.content.Intent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.Arrays;
+import java.util.Timer;
+
 public class MainActivity extends AppCompatActivity {
 
-    static final String[] PURDUE_BUILDINGS = new String[] {"ADPA-C - Aspire at Discovery Park",
+    static final String[] PURDUE_BUILDINGS = {"ADPA-C - Aspire at Discovery Park",
             "CARY - Cary Quadrangle", "ERHT - Earhart Residence Hall", "FST - First Street Towers",
             "GRFN - Griffin Residence Hall North", "GRFS - Griffin Residence Hall South (Formerly Third Street Suites)",
             "HARR - Harrison Residence Hall", "HAWK - Hawkins Hall", "HCRN - Honors College and Residences North",
@@ -39,10 +44,25 @@ public class MainActivity extends AppCompatActivity {
             "STEW - Stewart Center", "TREC - Turf Recreation Exercise Center"
     };
 
+    static final String[] TRAVEL_METHODS = {"Walking", "Biking", "Skateboarding", "E-Scooter", "Driving"};
+
+    static boolean validateBuilding(String building) {
+        int search = Arrays.binarySearch(PURDUE_BUILDINGS, building);
+        return search != -1;
+    }
+
+    static boolean validateMethod(String method) {
+        int search = Arrays.binarySearch(TRAVEL_METHODS, method);
+        return search != -1;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void launchTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
         startActivity(intent);
     }
