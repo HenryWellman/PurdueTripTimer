@@ -2,10 +2,9 @@ package com.purduetriptimer;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
@@ -15,35 +14,12 @@ public class FavoriteActivity extends AppCompatActivity {
         //contains the top three favorites
         String[] favorites = new String[3];
 
-        File f = new File(getFilesDir(), "trip.txt");
-        FileReader fr;
-        BufferedReader bfr;
-        try {
-            fr = new FileReader(f);
-            bfr = new BufferedReader(fr);
-        } catch (FileNotFoundException e) {
-            return favorites;
-        }
-
         //stores the users data
-        ArrayList<String> data = new ArrayList<String>();
+        File f = new File(getFilesDir(), "trip.txt");
+        ArrayList<String> data = MainActivity.readTripData(f);
 
         //displays the number of times each element in the data ArrayList is present
         ArrayList<Integer> frequency = new ArrayList<Integer>();
-
-
-        try {
-            String line = bfr.readLine();
-
-            while (line != null) {
-                data.add(line);
-                line = bfr.readLine();
-            }
-            bfr.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return favorites;
-        }
 
         for (int i = 0; i < data.size(); i++) {
             int counter = 1;
@@ -94,9 +70,6 @@ public class FavoriteActivity extends AppCompatActivity {
                 }
             }
         }
-
-        System.out.println(data.toString());
-        System.out.println(frequency.toString());
 
         return favorites;
     }
