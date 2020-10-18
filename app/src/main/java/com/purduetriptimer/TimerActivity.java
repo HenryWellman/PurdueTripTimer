@@ -1,6 +1,5 @@
 package com.purduetriptimer;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
 
@@ -126,7 +124,7 @@ public class TimerActivity extends AppCompatActivity {
         CharSequence toastText;
         try {
             File f = new File(getFilesDir(), "trip.txt");
-            MainActivity.storeTripData(f, from, to, method, time);
+            MainActivity.storeTripData(from, to, method, time);
             toastText = "Thank you! Your submission is successful!";
         } catch (Exception e) {
             toastText = "An error occurred!";

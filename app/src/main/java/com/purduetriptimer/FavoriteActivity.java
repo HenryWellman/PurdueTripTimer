@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
@@ -19,8 +20,7 @@ public class FavoriteActivity extends AppCompatActivity {
         String[] favorites = new String[3];
 
         //stores the users data
-        File f = new File(getFilesDir(), "trip.txt");
-        ArrayList<String> data = MainActivity.readTripData(f);
+        ArrayList<String> data = MainActivity.readTripData();
 
         //displays the number of times each element in the data ArrayList is present
         ArrayList<Integer> frequency = new ArrayList<Integer>();
@@ -50,7 +50,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         // identifies the most frequent element, adds that value to the favorites array,
         // then deletes that value from the ArrayList.
-        for (int i = 0; i < 3; i++) {    //tells the program to run 3 times
+        for (int i = 0; i < 3; i++) {    // tells the program to run 3 times
             int max = 0;
             int maxLocation = 0;
 
@@ -92,24 +92,21 @@ public class FavoriteActivity extends AppCompatActivity {
 
      public void onFavorite1CLick(View view) {
         String[] parts = favorites[0].split(",");
-        File f = new File(getFilesDir(), "trip.txt");
-        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
         TextView timeDisplay = findViewById(R.id.timeDisplay);
         timeDisplay.setText(average);
     }
 
     public void onFavorite2CLick(View view) {
         String[] parts = favorites[1].split(",");
-        File f = new File(getFilesDir(), "trip.txt");
-        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
         TextView timeDisplay = findViewById(R.id.timeDisplay);
         timeDisplay.setText(average);
     }
 
     public void onFavorite3CLick(View view) {
         String[] parts = favorites[2].split(",");
-        File f = new File(getFilesDir(), "trip.txt");
-        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
         TextView timeDisplay = findViewById(R.id.timeDisplay);
         timeDisplay.setText(average);
     }
