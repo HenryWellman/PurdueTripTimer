@@ -3,10 +3,7 @@ package com.purduetriptimer;
 import android.content.Intent;
 import android.view.View;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.*;
@@ -47,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
     static final String[] TRAVEL_METHODS = {"Walking", "Biking", "Skateboarding", "E-Scooter", "Driving"};
+
+    private CharSequence selectedTravelMethod;
+    private AutoCompleteTextView instanceFromText;
+    private AutoCompleteTextView instanceToText;
+    private Spinner instanceTravel;
 
     static boolean validateBuilding(String building) {
         int search = Arrays.binarySearch(PURDUE_BUILDINGS, building);
@@ -140,25 +142,40 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         fromText.setAdapter(fromAdapter);
+        instanceFromText = fromText;
 
         //Travel to with autocompletion
         AutoCompleteTextView toText = findViewById(R.id.travelTo);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         toText.setAdapter(toAdapter);
+        instanceToText = toText;
 
         //Travel method with a spinner
-        Spinner dropdown = findViewById(R.id.travelMethod);
+        Spinner travelDropdown = findViewById(R.id.travelMethod);
         ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, TRAVEL_METHODS);
-        dropdown.setAdapter(dropdownAdapter);
+        travelDropdown.setAdapter(dropdownAdapter);
+        instanceTravel = travelDropdown;
+        travelDropdown.setOnItemSelectedListener(new SpinnerSelectedListener());
     }
-
-
 
     public void launchTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("from", instanceFromText.getText().toString());
+        intent.putExtra("to", instanceToText.getText().toString());
+        intent.putExtra("method", selectedTravelMethod);
         startActivity(intent);
     }
 
+    public class SpinnerSelectedListener implements Spinner.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            selectedTravelMethod = parent.getItemAtPosition(pos).toString();
+        }
+
+        public void onNothingSelected(AdapterView parent) {
+            // Do nothing.
+        }
+    }
 }
