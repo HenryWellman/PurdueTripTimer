@@ -1,6 +1,7 @@
 package com.purduetriptimer;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.*;
 import androidx.fragment.app.FragmentActivity;
@@ -15,6 +16,9 @@ public class TimerActivity extends FragmentActivity {
     private AutoCompleteTextView textViewTo;
     private AutoCompleteTextView textViewMethod;
     private Chronometer chronometer;
+    private boolean running;
+    private boolean timerStarted;
+    private long pauseOffset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +37,27 @@ public class TimerActivity extends FragmentActivity {
         textViewFrom.setAdapter(buildingAdapter);
         textViewTo.setAdapter(buildingAdapter);
         textViewMethod.setAdapter(methodAdapter);
+
+        chronometer = findViewById(R.id.chronometer1);
+        Button resumeButton = findViewById(R.id.resumeButton);
+        Button pauseButton = findViewById(R.id.pauseButton);
+        Button resetButton = findViewById(R.id.resetButton);
+
+        resumeButton.setVisibility(Button.INVISIBLE);
+        pauseButton.setVisibility(Button.INVISIBLE);
+        resetButton.setVisibility(Button.INVISIBLE);
+
+        TextView timeStatusText = findViewById(R.id.timeStatusText);
     }
+
 
     public void startStopChronometer(View view) {
         Button startStopButton = findViewById(R.id.startStop);
         Button submitButton = findViewById(R.id.submit);
+        Button resumeButton = findViewById(R.id.resumeButton);
+        Button pauseButton = findViewById(R.id.pauseButton);
+        Button resetButton = findViewById(R.id.resetButton);
+        TextView timeStatusText = findViewById(R.id.timeStatusText);
 
         CharSequence timeText;
         // read timer
@@ -46,17 +66,64 @@ public class TimerActivity extends FragmentActivity {
         else
             timeText = chronometer.getText();
 
-        // start if time = 0
-        if (timeText.equals("00:00")) {
+        // if the timer is not yet clicked
+            if(!timerStarted) {
             chronometer = findViewById(R.id.chronometer1);
+            // Elapsed real time returns the milli seconds since boot, including time spent in sleep
+            // allows the timer to start when the start button is clicked
+            // pause offset is the time elapsed after the timer is paused and subtracts it
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
-            startStopButton.setText("Stop Trip");
+            running = true;
+            startStopButton.setText("End Trip");
+            resumeButton.setVisibility(Button.VISIBLE);
+            pauseButton.setVisibility(Button.VISIBLE);
+            resetButton.setVisibility(Button.VISIBLE);
+            timerStarted = true;
+            timeStatusText.setText("");
+
         } else {
-            // stop when time > 0 and hide button
+            // stop when timer has been "started"
             chronometer.stop();
             startStopButton.setVisibility(Button.INVISIBLE);
             submitButton.setVisibility(Button.VISIBLE);
+            resumeButton.setVisibility(Button.INVISIBLE);
+            pauseButton.setVisibility(Button.INVISIBLE);
+            resetButton.setVisibility(Button.INVISIBLE);
+
+            timeStatusText.setText("");
         }
+    }
+
+    public void resumeChronometer (View view) {
+        if(!running) {
+            TextView timeStatusText = findViewById(R.id.timeStatusText);
+            // Elapsed real time returns the milli seconds since boot, including time spent in sleep
+            // allows the timer to start when the start button is clicked
+            // pause offset is the time elapsed after the timer is paused and subtracts it
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+            running = true;
+            timeStatusText.setText("");
+        }
+    }
+
+    public void pauseChronometer(View view) {
+        TextView timeStatusText = findViewById(R.id.timeStatusText);
+        if (running) {
+            chronometer.stop();
+            //pause offset is the time
+            pauseOffset =  SystemClock.elapsedRealtime() - chronometer.getBase();
+            running = false;
+            timeStatusText.setText("Paused");
+        }
+    }
+
+    public void resetChronometer(View view) {
+        TextView timeStatusText = findViewById(R.id.timeStatusText);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        pauseOffset = 0;
+        timeStatusText.setText("");
     }
 
     public void submitTrip(View view) {
