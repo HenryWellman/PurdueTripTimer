@@ -1,5 +1,6 @@
 package com.purduetriptimer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
@@ -114,10 +115,11 @@ public class TimerActivity extends FragmentActivity {
         if (chronometer == null)
             return;
 
-        // read info from input
-        String from = textViewFrom.getText().toString();
-        String to = textViewTo.getText().toString();
-        String method = textViewMethod.getText().toString();
+        // read info from intent
+        Intent intent = getIntent();
+        String from = intent.getStringExtra("from");
+        String to = intent.getStringExtra("to");
+        String method = intent.getStringExtra("method");
         String time = chronometer.getText().toString();
 
         // validate inputs
