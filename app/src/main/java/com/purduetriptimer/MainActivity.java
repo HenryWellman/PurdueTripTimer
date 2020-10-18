@@ -58,10 +58,9 @@ public class MainActivity extends AppCompatActivity {
         return search != -1;
     }
 
-    private String getAverage(String from, String to, String method) {
+    static String getAverage(File f, String from, String to, String method) {
         double avg = 0.0;
         double total = 0.0;
-        File f = new File(getFilesDir(), "trip.txt");
         ArrayList<String> data = MainActivity.readTripData(f);
 
         for (int i = 0; i < data.size(); i++) {

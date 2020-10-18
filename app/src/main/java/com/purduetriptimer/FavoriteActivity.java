@@ -2,13 +2,17 @@ package com.purduetriptimer;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
     private String[] favPairs;
+    private String[] favorites;
 
     private String[] findFavorites() {
         //contains the top three favorites
@@ -74,11 +78,32 @@ public class FavoriteActivity extends AppCompatActivity {
         return favorites;
     }
 
+    private String[] parseFavorites() {
+        String[] result = new String[favorites.length];
+        for (int i = 0; i < favorites.length; i++) {
+            if (favorites[i] == null) {
+                continue;
+            }
+            String[] parts = favorites[i].split(",");
+            result[i] = String.format("From: %s \n To: %s \n %s", parts[0], parts[1], parts[2]);
+        }
+        return result;
+    }
+
+    public void onFavorite1CLick(View view) {
+        String[] parts = favorites[0].split(",");
+        File f = new File(getFilesDir(), "trip.txt");
+        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        favPairs = findFavorites();
+        favorites = findFavorites();
+        favPairs = parseFavorites();
         Button firstFav = findViewById(R.id.favorites1);
         firstFav.setText(favPairs[0]);
         Button secondFav = findViewById(R.id.favorites2);
