@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.*;
@@ -15,6 +18,10 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     private Button favorites;
+    private Button getTime;
+    private TextView getTimeText;
+    private TextView getTimeTextHeader;
+
 
     static final String[] PURDUE_BUILDINGS = {"ADPA-C - Aspire at Discovery Park",
             "CARY - Cary Quadrangle", "ERHT - Earhart Residence Hall", "FST - First Street Towers",
@@ -46,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             "STEW - Stewart Center", "TREC - Turf Recreation Exercise Center"
     };
 
-    static final String[] TRAVEL_METHODS = {"Walking", "Biking", "Skateboarding", "E-Scooter", "Driving"};
+    static final String[] TRAVEL_METHODS = {"Biking", "Driving", "E-Scooter", "Skateboarding", "Walking"};
 
     static boolean validateBuilding(String building) {
         int search = Arrays.binarySearch(PURDUE_BUILDINGS, building);
@@ -101,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 line = bfr.readLine();
             }
             bfr.close();
+            fr.close();
         } catch (IOException e) {
             return new ArrayList<String>();
         }
@@ -135,26 +143,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        getTimeTextHeader = (TextView) findViewById(R.id.textView5);
+        getTimeText = (TextView) findViewById(R.id.textView6);
+        getTime = (Button) findViewById(R.id.button2);
+
         //Travel from with autocompletion
-        AutoCompleteTextView fromText = findViewById(R.id.travelFrom);
+        final AutoCompleteTextView fromText = findViewById(R.id.travelFrom);
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         fromText.setAdapter(fromAdapter);
 
         //Travel to with autocompletion
-        AutoCompleteTextView toText = findViewById(R.id.travelTo);
+        final AutoCompleteTextView toText = findViewById(R.id.travelTo);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         toText.setAdapter(toAdapter);
 
         //Travel method with a spinner
-        Spinner dropdown = findViewById(R.id.travelMethod);
+        final Spinner dropdown = findViewById(R.id.travelMethod);
         ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, TRAVEL_METHODS);
         dropdown.setAdapter(dropdownAdapter);
+
+        //Makes the Time required textview and label visible.
+        getTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getTimeTextHeader.setVisibility(View.VISIBLE);
+                getTimeText.setVisibility(View.VISIBLE);
+                if (fromText.getText().toString() == null || toText.getText().toString() == null || dropdown.getSelectedItem().toString() == null) {
+                    CharSequence toastText = "Your input is invalid! Please check your input and resubmit.";
+                    Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    getTimeText.setText(getAverage(fromText.getText().toString(), toText.getText().toString(), dropdown.getSelectedItem().toString()));
+                }
+            }
+        });
     }
-
-
 
     public void launchTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
