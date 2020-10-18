@@ -90,8 +90,24 @@ public class FavoriteActivity extends AppCompatActivity {
         return result;
     }
 
-    public void onFavorite1CLick(View view) {
+     public void onFavorite1CLick(View view) {
         String[] parts = favorites[0].split(",");
+        File f = new File(getFilesDir(), "trip.txt");
+        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
+    public void onFavorite2CLick(View view) {
+        String[] parts = favorites[1].split(",");
+        File f = new File(getFilesDir(), "trip.txt");
+        String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
+    public void onFavorite3CLick(View view) {
+        String[] parts = favorites[2].split(",");
         File f = new File(getFilesDir(), "trip.txt");
         String average = MainActivity.getAverage(f, parts[0], parts[1], parts[2]);
         TextView timeDisplay = findViewById(R.id.timeDisplay);
