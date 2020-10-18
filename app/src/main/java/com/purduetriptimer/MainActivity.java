@@ -180,6 +180,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchTimer(View view) {
+        if (!validateBuilding(instanceFromText.getText().toString())
+                || !validateBuilding(instanceToText.getText().toString())
+                || !validateMethod(instanceTravel.getSelectedItem().toString())) {
+            CharSequence toastText = "Your input is invalid! Please check your input and resubmit.";
+            Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
         Intent intent = new Intent(this, TimerActivity.class);
         intent.putExtra("from", instanceFromText.getText().toString());
         intent.putExtra("to", instanceToText.getText().toString());

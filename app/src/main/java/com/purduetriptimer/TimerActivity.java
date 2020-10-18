@@ -40,7 +40,7 @@ public class TimerActivity extends FragmentActivity {
         TextView timeStatusText = findViewById(R.id.timeStatusText);
 
         // if the timer is not yet clicked
-        if(!timerStarted) {
+        if (!timerStarted) {
             chronometer = findViewById(R.id.chronometer1);
             // Elapsed real time returns the milli seconds since boot, including time spent in sleep
             // allows the timer to start when the start button is clicked
