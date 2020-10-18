@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private Button favorites;
     private Button getTime;
     private TextView getTimeText;
-    private TextView getTimeTextHeader;
 
     static final String API_ENDPOINT = "https://purduetriptimer.chrisx.xyz/trips/";
 
@@ -195,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getTimeTextHeader = findViewById(R.id.textView5);
         getTimeText = findViewById(R.id.textView6);
         getTime = findViewById(R.id.button2);
 
@@ -255,24 +253,28 @@ public class MainActivity extends AppCompatActivity {
         if (!validateBuilding(instanceFromText.getText().toString())
                 || !validateBuilding(instanceToText.getText().toString())
                 || !validateMethod(instanceTravel.getSelectedItem().toString())) {
-            getTimeTextHeader.setVisibility(View.INVISIBLE);
+
             getTimeText.setVisibility(View.INVISIBLE);
             CharSequence toastText = "Your input is invalid! Please check your input and resubmit.";
             Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
             toast.show();
         } else {
-            getTimeTextHeader.setVisibility(View.VISIBLE);
+
             getTimeText.setVisibility(View.VISIBLE);
-            String average = getAverage(instanceFromText.getText().toString(), instanceToText.getText().toString(),
+            System.out.println(instanceFromText.getText().toString());
+            System.out.println(instanceToText.getText().toString());
+            String fromText = instanceFromText.getText().toString();
+            String toText = instanceToText.getText().toString();
+            String average = getAverage(fromText, toText,
                     instanceTravel.getSelectedItem().toString());
             if (average.equals("0")) {
-                getTimeTextHeader.setVisibility(View.INVISIBLE);
+
                 getTimeText.setVisibility(View.INVISIBLE);
                 CharSequence toastText = "Trip data not available!";
                 Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
                 toast.show();
             } else {
-                getTimeTextHeader.setVisibility(View.VISIBLE);
+
                 getTimeText.setVisibility(View.VISIBLE);
                 getTimeText.setText(average);
             }
