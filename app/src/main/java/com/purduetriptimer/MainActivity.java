@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
 //        BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 //        try {
 //            while (bfr.readLine() != null) {
-//                System.out.println(bfr.readLine());
 //                sbresp.append(bfr.readLine());
 //            }
 //            bfr.close();
@@ -259,10 +258,7 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
             toast.show();
         } else {
-
             getTimeText.setVisibility(View.VISIBLE);
-            System.out.println(instanceFromText.getText().toString());
-            System.out.println(instanceToText.getText().toString());
             String fromText = instanceFromText.getText().toString();
             String toText = instanceToText.getText().toString();
             String average = getAverage(fromText, toText,
