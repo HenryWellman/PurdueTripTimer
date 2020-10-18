@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 total = total + seconds;
             }
         }
+        if (total == 0) {
+            return "0";
+        }
         avg = total / data.size();
         String answer = "";
         int numMinutes = (int) avg / 60;
@@ -169,13 +172,17 @@ public class MainActivity extends AppCompatActivity {
         getTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getTimeTextHeader.setVisibility(View.VISIBLE);
-                getTimeText.setVisibility(View.VISIBLE);
-                if (fromText.getText().toString() == null || toText.getText().toString() == null || dropdown.getSelectedItem().toString() == null) {
-                    CharSequence toastText = "Your input is invalid! Please check your input and resubmit.";
+                if (fromText.getText().toString().equals("") || toText.getText().toString().equals("")) {
+                    CharSequence toastText = "Please enter the full details of your trip!";
+                    Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (getAverage(fromText.getText().toString(), toText.getText().toString(), dropdown.getSelectedItem().toString()).equals("0")) {
+                    CharSequence toastText = "Trip data not available!";
                     Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
+                    getTimeTextHeader.setVisibility(View.VISIBLE);
+                    getTimeText.setVisibility(View.VISIBLE);
                     getTimeText.setText(getAverage(fromText.getText().toString(), toText.getText().toString(), dropdown.getSelectedItem().toString()));
                 }
             }
