@@ -5,6 +5,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="#000000"
         tools:context=".TimerActivity">
 
     <Button
@@ -13,14 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="#CFB991"
         android:onClick="startStopChronometer"
         android:text="Start Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+        tools:layout_editor_absoluteY="380dp" />
 
     <Chronometer
         android:id="@+id/chronometer1"
@@ -30,28 +30,34 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#CFB991"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.219" />
+        app:layout_constraintTop_toBottomOf="@+id/startStop" />
 
     <Button
-            android:text="Submit This Trip"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/submit"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="44dp"
-            android:layout_marginStart="24dp" android:layout_marginEnd="24dp" android:onClick="submitTrip"
-            app:layout_constraintHorizontal_bias="0.497" android:visibility="invisible"/>
+        android:id="@+id/submit"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="#CFB991"
+        android:onClick="submitTrip"
+        android:text="Submit This Trip"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pause"
+        android:backgroundTint="#CFB991"
         android:onClick="pauseChronometer"
+        android:text="Pause"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.099"
@@ -63,8 +69,9 @@
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset"
+        android:backgroundTint="#CFB991"
         android:onClick="resetChronometer"
+        android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.919"
@@ -76,8 +83,9 @@
         android:id="@+id/resumeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resume"
+        android:backgroundTint="#CFB991"
         android:onClick="resumeChronometer"
+        android:text="Resume"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

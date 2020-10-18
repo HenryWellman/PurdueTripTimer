@@ -1,6 +1,7 @@
 package com.purduetriptimer;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.view.View;
 import android.os.Bundle;
 import android.widget.*;
@@ -13,8 +14,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
     private Button favorites;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView getTimeText;
     private TextView getTimeTextHeader;
 
+    static final String API_ENDPOINT = "https://purduetriptimer.chrisx.xyz/trips/";
 
     static final String[] PURDUE_BUILDINGS = {"ADPA-C - Aspire at Discovery Park",
             "AERO - Aerospace Science Laboratory", "AQUA - Boilermaker Aquatic Center",
@@ -74,75 +77,113 @@ public class MainActivity extends AppCompatActivity {
         return search >= 0;
     }
 
-    private String getAverage(String from, String to, String method) {
-        double avg = 0.0;
+    static String getAverage(String from, String to, String method) {
+        int avg;
+        int count = 0;
         double total = 0.0;
-        File f = new File(getFilesDir(), "trip.txt");
-        ArrayList<String> data = MainActivity.readTripData(f);
+        ArrayList<String> data = MainActivity.readTripData();
 
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).contains(from) && data.get(i).contains(to) && data.get(i).contains(method)) {
                 String[] fields = data.get(i).split(",");
                 double seconds = Double.parseDouble(fields[3]);
                 total = total + seconds;
+                count++;
             }
         }
-        avg = total / data.size();
-        String answer = "";
-        int numMinutes = (int) avg / 60;
-        int numSeconds = (int) avg % 60;
+        if (total == 0) {
+            return "0";
+        }
+        avg = (int) (total / count);
+        int numMinutes = avg / 60;
+        int numSeconds = avg % 60;
 
-        answer = numMinutes + " Minutes " + numSeconds + " Seconds";
+        String answer = numMinutes + " Minutes " + numSeconds + " Seconds";
         return answer;
     }
 
-    static ArrayList<String> readTripData(File f) {
-        FileReader fr;
-        BufferedReader bfr;
-        try {
-            fr = new FileReader(f);
-            bfr = new BufferedReader(fr);
-        } catch (FileNotFoundException e) {
-            return new ArrayList<String>();
-        }
-
-        //stores the users data
+    static ArrayList<String> readTripData() {
+        // stores the users data
         ArrayList<String> data = new ArrayList<String>();
 
         try {
-            String line = bfr.readLine();
-
-            while (line != null) {
-                data.add(line);
-                line = bfr.readLine();
+            // send GET to API
+            URL url = new URL(API_ENDPOINT);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            // read response from API
+            while (bfr.readLine() != null) {
+                data.add(bfr.readLine());
             }
             bfr.close();
-            fr.close();
         } catch (IOException e) {
             return new ArrayList<String>();
         }
+
         return data;
     }
 
-    static void storeTripData(File f, String from, String to, String method, String time)
-            throws FileNotFoundException {
-            FileOutputStream fos = new FileOutputStream(f, true);
-            PrintWriter pw = new PrintWriter(fos);
+    static void storeTripData(String from, String to, String method, String time) throws IOException {
+        // convert time to seconds
+        String[] timeParts = time.split(":");
+        int minutes = Integer.parseInt(timeParts[0]);
+        int seconds = Integer.parseInt(timeParts[1]);
+        String totalTime = String.valueOf((minutes * 60) + seconds);
 
-            // write time in seconds
-            String[] timeParts = time.split(":");
-            int minutes = Integer.parseInt(timeParts[0]);
-            int seconds = Integer.parseInt(timeParts[1]);
-            int totalTime = (minutes * 60) + seconds;
+        // send POST to API
+        URL url = new URL(API_ENDPOINT);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        // assemble POST request body
+        Map<String,String> arguments = new HashMap<>();
+        arguments.put("from", from);
+        arguments.put("to", to);
+        arguments.put("method", method);
+        arguments.put("time", totalTime);
+        StringBuilder sbreq = new StringBuilder();
+        for (Map.Entry<String,String> entry : arguments.entrySet()) {
+            sbreq.append(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" +
+                    URLEncoder.encode(entry.getValue(), "UTF-8") + "&");
+        }
+        // remove last '&'
+        sbreq.substring(0, sbreq.length() - 1);
+        byte[] out = sbreq.toString().getBytes(StandardCharsets.UTF_8);
+        int length = out.length;
 
-            pw.println(from + "," + to + "," + method + "," + totalTime);
-            pw.close();
+        // send POST to server
+        conn.setFixedLengthStreamingMode(length);
+        conn.connect();
+        try (OutputStream os = conn.getOutputStream()) {
+            os.write(out);
+        }
+
+        // TODO: NOT GETTING RESPONSE. FIX
+//        StringBuilder sbresp = new StringBuilder();
+//        BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        try {
+//            while (bfr.readLine() != null) {
+//                System.out.println(bfr.readLine());
+//                sbresp.append(bfr.readLine());
+//            }
+//            bfr.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        if (conn.getResponseCode() >= 400) {
+            throw new IOException(conn.getResponseMessage());
+        };
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // override "no networking on main thread"
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         favorites = findViewById(R.id.favorites);
         favorites.setOnClickListener(new View.OnClickListener() {
@@ -208,8 +249,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getTimeTextHeader.setVisibility(View.VISIBLE);
             getTimeText.setVisibility(View.VISIBLE);
-            getTimeText.setText(getAverage(instanceFromText.getText().toString(), instanceToText.getText().toString(),
-                    instanceTravel.getSelectedItem().toString()));
+            String average = getAverage(instanceFromText.getText().toString(), instanceToText.getText().toString(),
+                    instanceTravel.getSelectedItem().toString());
+            if (average.equals("0")) {
+                getTimeTextHeader.setVisibility(View.INVISIBLE);
+                getTimeText.setVisibility(View.INVISIBLE);
+                CharSequence toastText = "Trip data not available!";
+                Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                getTimeTextHeader.setVisibility(View.VISIBLE);
+                getTimeText.setVisibility(View.VISIBLE);
+                getTimeText.setText(average);
+            }
         }
     }
 

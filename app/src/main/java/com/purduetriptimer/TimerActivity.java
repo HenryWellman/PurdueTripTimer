@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.View;
 import android.widget.*;
-import androidx.fragment.app.FragmentActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
-public class TimerActivity extends FragmentActivity {
+public class TimerActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private boolean running;
     private boolean timerStarted;
@@ -123,10 +124,10 @@ public class TimerActivity extends FragmentActivity {
         CharSequence toastText;
         try {
             File f = new File(getFilesDir(), "trip.txt");
-            MainActivity.storeTripData(f, from, to, method, time);
+            MainActivity.storeTripData(from, to, method, time);
             toastText = "Thank you! Your submission is successful!";
         } catch (Exception e) {
-            toastText = "An error occurred!";
+            toastText = e.getMessage();
         }
 
         // show status toast, and end activity

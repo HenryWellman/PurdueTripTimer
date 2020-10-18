@@ -2,21 +2,23 @@ package com.purduetriptimer;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Button;
 
-import java.io.File;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
     private String[] favPairs;
+    private String[] favorites;
 
     private String[] findFavorites() {
         //contains the top three favorites
         String[] favorites = new String[3];
 
         //stores the users data
-        File f = new File(getFilesDir(), "trip.txt");
-        ArrayList<String> data = MainActivity.readTripData(f);
+        ArrayList<String> data = MainActivity.readTripData();
 
         //displays the number of times each element in the data ArrayList is present
         ArrayList<Integer> frequency = new ArrayList<Integer>();
@@ -46,7 +48,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         // identifies the most frequent element, adds that value to the favorites array,
         // then deletes that value from the ArrayList.
-        for (int i = 0; i < 3; i++) {    //tells the program to run 3 times
+        for (int i = 0; i < 3; i++) {    // tells the program to run 3 times
             int max = 0;
             int maxLocation = 0;
 
@@ -65,7 +67,6 @@ public class FavoriteActivity extends AppCompatActivity {
                             frequency.set(k, -1);
                             data.set(k, null);
                         }
-
                     }
                 }
             }
@@ -74,11 +75,46 @@ public class FavoriteActivity extends AppCompatActivity {
         return favorites;
     }
 
+    private String[] parseFavorites() {
+        String[] result = new String[favorites.length];
+        for (int i = 0; i < favorites.length; i++) {
+            if (favorites[i] == null) {
+                result[i] = "";
+                continue;
+            }
+            String[] parts = favorites[i].split(",");
+            result[i] = String.format("From: %s \n To: %s \n %s", parts[0], parts[1], parts[2]);
+        }
+        return result;
+    }
+
+     public void onFavorite1CLick(View view) {
+        String[] parts = favorites[0].split(",");
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
+    public void onFavorite2CLick(View view) {
+        String[] parts = favorites[1].split(",");
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
+    public void onFavorite3CLick(View view) {
+        String[] parts = favorites[2].split(",");
+        String average = MainActivity.getAverage(parts[0], parts[1], parts[2]);
+        TextView timeDisplay = findViewById(R.id.timeDisplay);
+        timeDisplay.setText(average);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-        favPairs = findFavorites();
+        favorites = findFavorites();
+        favPairs = parseFavorites();
         Button firstFav = findViewById(R.id.favorites1);
         firstFav.setText(favPairs[0]);
         Button secondFav = findViewById(R.id.favorites2);
