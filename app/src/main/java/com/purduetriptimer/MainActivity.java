@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 total = total + seconds;
             }
         }
+        if (total == 0) {
+            return "0";
+        }
         avg = total / data.size();
         String answer = "";
         int numMinutes = (int) avg / 60;
@@ -208,8 +211,19 @@ public class MainActivity extends AppCompatActivity {
             getTimeTextHeader.setVisibility(View.VISIBLE);
             getTimeText.setVisibility(View.VISIBLE);
             File f = new File(getFilesDir(), "trip.txt");
-            getTimeText.setText(getAverage(f, instanceFromText.getText().toString(), instanceToText.getText().toString(),
-                    instanceTravel.getSelectedItem().toString()));
+            String average = getAverage(f, instanceFromText.getText().toString(), instanceToText.getText().toString(),
+                    instanceTravel.getSelectedItem().toString());
+            if (average.equals("0")) {
+                getTimeTextHeader.setVisibility(View.INVISIBLE);
+                getTimeText.setVisibility(View.INVISIBLE);
+                CharSequence toastText = "Trip data not available!";
+                Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
+                toast.show();
+            } else {
+                getTimeTextHeader.setVisibility(View.VISIBLE);
+                getTimeText.setVisibility(View.VISIBLE);
+                getTimeText.setText(average);
+            }
         }
     }
 
