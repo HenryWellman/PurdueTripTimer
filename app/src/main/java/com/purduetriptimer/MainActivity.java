@@ -113,8 +113,10 @@ public class MainActivity extends AppCompatActivity {
             conn.setRequestMethod("GET");
             BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             // read response from API
-            while (bfr.readLine() != null) {
-                data.add(bfr.readLine());
+            String line = bfr.readLine();
+            while (line != null) {
+                data.add(line);
+                line = bfr.readLine();
             }
             bfr.close();
         } catch (IOException e) {
