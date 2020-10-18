@@ -12,9 +12,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 public class TimerActivity extends FragmentActivity {
-    private AutoCompleteTextView textViewFrom;
-    private AutoCompleteTextView textViewTo;
-    private AutoCompleteTextView textViewMethod;
     private Chronometer chronometer;
     private boolean running;
     private boolean timerStarted;
@@ -24,19 +21,6 @@ public class TimerActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
-
-        ArrayAdapter<String> buildingAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, MainActivity.PURDUE_BUILDINGS);
-        ArrayAdapter<String> methodAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, MainActivity.TRAVEL_METHODS);
-
-        textViewFrom = findViewById(R.id.From);
-        textViewTo = findViewById(R.id.To);
-        textViewMethod = findViewById(R.id.Method);
-
-        textViewFrom.setAdapter(buildingAdapter);
-        textViewTo.setAdapter(buildingAdapter);
-        textViewMethod.setAdapter(methodAdapter);
 
         chronometer = findViewById(R.id.chronometer1);
         Button resumeButton = findViewById(R.id.resumeButton);

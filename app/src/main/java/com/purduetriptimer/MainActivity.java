@@ -59,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         return search != -1;
     }
 
+    private AutoCompleteTextView instanceFromText;
+    private AutoCompleteTextView instanceToText;
+    private Spinner instanceTravel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,22 +73,31 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         fromText.setAdapter(fromAdapter);
+        instanceFromText = fromText;
 
         //Travel to with autocompletion
         AutoCompleteTextView toText = findViewById(R.id.travelTo);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, PURDUE_BUILDINGS);
         toText.setAdapter(toAdapter);
+        instanceToText = toText;
+
 
         //Travel method with a spinner
-        Spinner dropdown = findViewById(R.id.travelMethod);
+        Spinner travelDropdown = findViewById(R.id.travelMethod);
         ArrayAdapter<String> dropdownAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, TRAVEL_METHODS);
-        dropdown.setAdapter(dropdownAdapter);
+        travelDropdown.setAdapter(dropdownAdapter);
+        instanceTravel = travelDropdown;
     }
+
+
 
     public void launchTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("from", instanceFromText.getText());
+        intent.putExtra("to", instanceToText.getText());
+        intent.putExtra("method", instanceTravel.setOnItemClickListener(););
         startActivity(intent);
     }
 }
