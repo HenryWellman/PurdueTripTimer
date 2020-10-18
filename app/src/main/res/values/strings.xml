@@ -9,4 +9,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_most_common">MostCommonActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_personal">PersonalActivity</string>
+    <string name="title_activity_persona">PersonaActivity</string>
+    <string name="title_activity_time_required">TimeRequiredActivity</string>
 </resources>

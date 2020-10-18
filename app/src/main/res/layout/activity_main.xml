@@ -111,13 +111,53 @@
             android:layout_marginBottom="24dp"/>
 
     <Button
-            android:id="@+id/favorites"
+        android:id="@+id/favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="Favorites"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Time Required"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/favorites"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/travelMethod"
+        app:layout_constraintVertical_bias="0.047" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/favorites"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <Button
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Favorites"
+            android:layout_marginBottom="16dp"
+            android:text="Get Time"
+            app:layout_constraintBottom_toTopOf="@+id/favorites"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="24dp" android:layout_marginEnd="24dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.498"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintVertical_bias="1.0" android:onClick="onGetTimeClick"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
