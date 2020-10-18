@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context=".TimerActivity">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:background="#000000"
+        tools:context=".TimerActivity">
 
     <Button
         android:id="@+id/startStop"
@@ -13,15 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#CFB991"
         android:onClick="startStopChronometer"
         android:text="Start Timer"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.571" />
+        tools:layout_editor_absoluteY="380dp" />
 
     <Chronometer
         android:id="@+id/chronometer1"
@@ -31,13 +30,10 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#CFB991"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startStop"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/startStop" />
 
     <Button
         android:id="@+id/submit"
@@ -46,7 +42,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="44dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#CFB991"
         android:onClick="submitTrip"
         android:text="Submit This Trip"
         android:visibility="invisible"
@@ -59,7 +55,7 @@
         android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#CFB991"
         android:onClick="pauseChronometer"
         android:text="Pause"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -73,7 +69,7 @@
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#CFB991"
         android:onClick="resetChronometer"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +83,7 @@
         android:id="@+id/resumeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="#CFB991"
         android:onClick="resumeChronometer"
         android:text="Resume"
         app:layout_constraintBottom_toBottomOf="parent"
