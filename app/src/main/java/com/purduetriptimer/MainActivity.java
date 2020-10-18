@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +56,48 @@ public class MainActivity extends AppCompatActivity {
     static boolean validateMethod(String method) {
         int search = Arrays.binarySearch(TRAVEL_METHODS, method);
         return search != -1;
+    }
+
+    static ArrayList<String> readTripData(File f) {
+        FileReader fr;
+        BufferedReader bfr;
+        try {
+            fr = new FileReader(f);
+            bfr = new BufferedReader(fr);
+        } catch (FileNotFoundException e) {
+            return new ArrayList<String>();
+        }
+
+        //stores the users data
+        ArrayList<String> data = new ArrayList<String>();
+
+        try {
+            String line = bfr.readLine();
+
+            while (line != null) {
+                data.add(line);
+                line = bfr.readLine();
+            }
+            bfr.close();
+        } catch (IOException e) {
+            return new ArrayList<String>();
+        }
+        return data;
+    }
+
+    static void storeTripData(File f, String from, String to, String method, String time)
+            throws FileNotFoundException {
+            FileOutputStream fos = new FileOutputStream(f, true);
+            PrintWriter pw = new PrintWriter(fos);
+
+            // write time in seconds
+            String[] timeParts = time.split(":");
+            int minutes = Integer.parseInt(timeParts[0]);
+            int seconds = Integer.parseInt(timeParts[1]);
+            int totalTime = (minutes * 60) + seconds;
+
+            pw.println(from + "," + to + "," + method + "," + totalTime);
+            pw.close();
     }
 
     @Override

@@ -7,9 +7,6 @@ import android.widget.*;
 import androidx.fragment.app.FragmentActivity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 
 public class TimerActivity extends FragmentActivity {
     private AutoCompleteTextView textViewFrom;
@@ -46,8 +43,6 @@ public class TimerActivity extends FragmentActivity {
         resumeButton.setVisibility(Button.INVISIBLE);
         pauseButton.setVisibility(Button.INVISIBLE);
         resetButton.setVisibility(Button.INVISIBLE);
-
-        TextView timeStatusText = findViewById(R.id.timeStatusText);
     }
 
 
@@ -59,15 +54,8 @@ public class TimerActivity extends FragmentActivity {
         Button resetButton = findViewById(R.id.resetButton);
         TextView timeStatusText = findViewById(R.id.timeStatusText);
 
-        CharSequence timeText;
-        // read timer
-        if (chronometer == null)
-            timeText = "00:00";
-        else
-            timeText = chronometer.getText();
-
         // if the timer is not yet clicked
-            if(!timerStarted) {
+        if(!timerStarted) {
             chronometer = findViewById(R.id.chronometer1);
             // Elapsed real time returns the milli seconds since boot, including time spent in sleep
             // allows the timer to start when the start button is clicked
@@ -148,9 +136,10 @@ public class TimerActivity extends FragmentActivity {
         // write to file
         CharSequence toastText;
         try {
-            writeToFile("trip.txt", from, to, method, time);
+            File f = new File(getFilesDir(), "trip.txt");
+            MainActivity.storeTripData(f, from, to, method, time);
             toastText = "Thank you! Your submission is successful!";
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             toastText = "An error occurred!";
         }
 
@@ -158,22 +147,5 @@ public class TimerActivity extends FragmentActivity {
         Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
         toast.show();
         finish();
-    }
-
-    private void writeToFile(String filename, String from, String to, String method, String time)
-            throws FileNotFoundException {
-        File appData = getFilesDir();
-        File f = new File(appData, filename);
-        FileOutputStream fos = new FileOutputStream(f, true);
-        PrintWriter pw = new PrintWriter(fos);
-
-        // write time in seconds
-        String[] timeParts = time.split(":");
-        int minutes = Integer.parseInt(timeParts[0]);
-        int seconds = Integer.parseInt(timeParts[1]);
-        int totalTime = (minutes * 60) + seconds;
-
-        pw.println(from + "," + to + "," + method + "," + totalTime);
-        pw.close();
     }
 }
