@@ -6,12 +6,14 @@
     android:layout_width="match_parent"
     android:padding="20dp"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".FavoriteActivity">
 
     <Button
         android:id="@+id/favorites1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#CFB991"
         android:onClick="onFavorite1CLick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:backgroundTint="#CFB991"
         android:onClick="onFavorite2CLick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +40,7 @@
         android:id="@+id/favorites3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#CFB991"
         android:onClick="onFavorite3CLick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,11 +52,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/favorites3">
 
         <TextView
             android:id="@+id/timeReq"
@@ -61,6 +67,7 @@
             android:text="Time Required:"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="#CFB991"
             android:textSize="16sp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -75,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
+            android:textColor="#CFB991"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

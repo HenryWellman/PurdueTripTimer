@@ -207,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             getTimeTextHeader.setVisibility(View.VISIBLE);
             getTimeText.setVisibility(View.VISIBLE);
-            getTimeText.setText(getAverage(instanceFromText.getText().toString(), instanceToText.getText().toString(),
+            File f = new File(getFilesDir(), "trip.txt");
+            getTimeText.setText(getAverage(f, instanceFromText.getText().toString(), instanceToText.getText().toString(),
                     instanceTravel.getSelectedItem().toString()));
         }
     }
