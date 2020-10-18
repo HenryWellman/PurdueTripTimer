@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         fromText.setAdapter(fromAdapter);
         instanceFromText = fromText;
 
+
         //Travel to with autocompletion
         final AutoCompleteTextView toText = findViewById(R.id.travelTo);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<String>(this,
@@ -218,6 +219,17 @@ public class MainActivity extends AppCompatActivity {
         travelDropdown.setAdapter(dropdownAdapter);
         instanceTravel = travelDropdown;
         travelDropdown.setOnItemSelectedListener(new SpinnerSelectedListener());
+
+        //clear button
+        Button clearTextButton = (Button) findViewById(R.id.clearButton);
+
+        clearTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromText.setText("");
+                toText.setText("");
+            }
+        });
     }
 
     public void launchTimer(View view) {
