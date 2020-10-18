@@ -41,7 +41,7 @@
         android:hint="Select a Location"
         android:popupBackground="@color/colorPrimary"
         android:textColor="#CFB991"
-        android:textColorHighlight="@color/design_default_color_background"
+        android:textColorHighlight="@color/design_default_color_secondary_variant"
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +62,7 @@
         android:hint="Select a Location"
         android:popupBackground="@color/colorPrimary"
         android:textColor="#CFB991"
-        android:textColorHighlight="@color/design_default_color_background"
+        android:textColorHighlight="@color/design_default_color_secondary_variant"
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -193,4 +193,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
