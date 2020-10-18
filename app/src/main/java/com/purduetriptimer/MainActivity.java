@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         int numSeconds = avg % 60;
 
         String answer = numMinutes + " Minutes " + numSeconds + " Seconds";
-        System.out.println(avg);
         return answer;
     }
 
@@ -114,9 +113,8 @@ public class MainActivity extends AppCompatActivity {
             conn.setRequestMethod("GET");
             BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             // read response from API
-            String line;
-            while ((line = bfr.readLine()) != null) {
-                data.add(line);
+            while (bfr.readLine() != null) {
+                data.add(bfr.readLine());
             }
             bfr.close();
         } catch (IOException e) {
@@ -126,46 +124,56 @@ public class MainActivity extends AppCompatActivity {
         return data;
     }
 
-    static void storeTripData(String from, String to, String method, String time) {
-        try {
-            // convert time to seconds
-            String[] timeParts = time.split(":");
-            int minutes = Integer.parseInt(timeParts[0]);
-            int seconds = Integer.parseInt(timeParts[1]);
-            String totalTime = String.valueOf((minutes * 60) + seconds);
+    static void storeTripData(String from, String to, String method, String time) throws IOException {
+        // convert time to seconds
+        String[] timeParts = time.split(":");
+        int minutes = Integer.parseInt(timeParts[0]);
+        int seconds = Integer.parseInt(timeParts[1]);
+        String totalTime = String.valueOf((minutes * 60) + seconds);
 
-            // send POST to API
-            URL url = new URL(API_ENDPOINT);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            // assemble POST request body
-            Map<String,String> arguments = new HashMap<>();
-            arguments.put("from", from);
-            arguments.put("to", to);
-            arguments.put("method", method);
-            arguments.put("time", totalTime);
-            StringBuilder sb = new StringBuilder();
-            for (Map.Entry<String,String> entry : arguments.entrySet()) {
-                sb.append(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" +
-                        URLEncoder.encode(entry.getValue(), "UTF-8") + "&");
-            }
-            // remove last '&'
-            sb.substring(0, sb.length() - 1);
-            byte[] out = sb.toString().getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            // send POST to server
-            conn.setFixedLengthStreamingMode(length);
-            conn.connect();
-            try(OutputStream os = conn.getOutputStream()) {
-                os.write(out);
-            }
-            System.out.println(conn.getResponseCode());
-
-        } catch (IOException e) {
-            // do nothing
+        // send POST to API
+        URL url = new URL(API_ENDPOINT);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        // assemble POST request body
+        Map<String,String> arguments = new HashMap<>();
+        arguments.put("from", from);
+        arguments.put("to", to);
+        arguments.put("method", method);
+        arguments.put("time", totalTime);
+        StringBuilder sbreq = new StringBuilder();
+        for (Map.Entry<String,String> entry : arguments.entrySet()) {
+            sbreq.append(URLEncoder.encode(entry.getKey(), "UTF-8") + "=" +
+                    URLEncoder.encode(entry.getValue(), "UTF-8") + "&");
         }
+        // remove last '&'
+        sbreq.substring(0, sbreq.length() - 1);
+        byte[] out = sbreq.toString().getBytes(StandardCharsets.UTF_8);
+        int length = out.length;
+
+        // send POST to server
+        conn.setFixedLengthStreamingMode(length);
+        conn.connect();
+        try (OutputStream os = conn.getOutputStream()) {
+            os.write(out);
+        }
+
+        // TODO: NOT GETTING RESPONSE. FIX
+//        StringBuilder sbresp = new StringBuilder();
+//        BufferedReader bfr = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        try {
+//            while (bfr.readLine() != null) {
+//                System.out.println(bfr.readLine());
+//                sbresp.append(bfr.readLine());
+//            }
+//            bfr.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        if (conn.getResponseCode() >= 400) {
+            throw new IOException(conn.getResponseMessage());
+        };
     }
 
     @Override

@@ -127,7 +127,7 @@ public class TimerActivity extends AppCompatActivity {
             MainActivity.storeTripData(from, to, method, time);
             toastText = "Thank you! Your submission is successful!";
         } catch (Exception e) {
-            toastText = "An error occurred!";
+            toastText = e.getMessage();
         }
 
         // show status toast, and end activity

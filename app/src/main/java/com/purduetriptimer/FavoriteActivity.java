@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class FavoriteActivity extends AppCompatActivity {
@@ -69,7 +67,6 @@ public class FavoriteActivity extends AppCompatActivity {
                             frequency.set(k, -1);
                             data.set(k, null);
                         }
-
                     }
                 }
             }
@@ -82,6 +79,7 @@ public class FavoriteActivity extends AppCompatActivity {
         String[] result = new String[favorites.length];
         for (int i = 0; i < favorites.length; i++) {
             if (favorites[i] == null) {
+                result[i] = "";
                 continue;
             }
             String[] parts = favorites[i].split(",");
