@@ -18,7 +18,7 @@
             android:text="Purdue Trip Timer"
             android:textColor="#CFB991"
             android:textSize="40sp"
-            app:layout_constraintBottom_toBottomOf="@+id/divider"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintLeft_toLeftOf="parent"
