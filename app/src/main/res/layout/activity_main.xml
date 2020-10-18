@@ -28,16 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-    <View
-            android:id="@+id/divider"
-            android:layout_width="409dp"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.146"/>
+
 
     <AutoCompleteTextView
         android:id="@+id/travelFrom"
@@ -50,7 +41,7 @@
         android:backgroundTint="#CFB991"
         android:completionThreshold="1"
         android:hint="Select a Location"
-        android:textColor="@android:color/background_light"
+        android:textColor="#CFB991"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -173,6 +164,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#CFB991"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/favorites"
         app:layout_constraintEnd_toEndOf="parent"

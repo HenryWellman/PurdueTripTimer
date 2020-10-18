@@ -17,8 +17,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".FavoriteActivity"
-            android:label="FavoriteActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="PurdueTripTimer"
+            android:theme="@style/AppTheme" />
         <activity android:name=".TimerActivity" />
         <activity
             android:name=".MainActivity"
