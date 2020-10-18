@@ -58,6 +58,28 @@ public class MainActivity extends AppCompatActivity {
         return search != -1;
     }
 
+    private String getAverage(String from, String to, String method) {
+        double avg = 0.0;
+        double total = 0.0;
+        File f = new File(getFilesDir(), "trip.txt");
+        ArrayList<String> data = MainActivity.readTripData(f);
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).contains(from) && data.get(i).contains(to) && data.get(i).contains(method)) {
+                String[] fields = data.get(i).split(",");
+                double seconds = Double.parseDouble(fields[3]);
+                total = total + seconds;
+            }
+        }
+        avg = total / data.size();
+        String answer = "";
+        int numMinutes = (int) avg / 60;
+        int numSeconds = (int) avg % 60;
+
+        answer = numMinutes + " Minutes " + numSeconds + " Seconds";
+        return answer;
+    }
+
     static ArrayList<String> readTripData(File f) {
         FileReader fr;
         BufferedReader bfr;
@@ -131,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item, TRAVEL_METHODS);
         dropdown.setAdapter(dropdownAdapter);
     }
+
+
 
     public void launchTimer(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
