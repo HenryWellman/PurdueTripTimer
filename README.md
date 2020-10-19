@@ -1,5 +1,7 @@
 # Purdue TripTimer
 
+[Download Latest APK](https://github.com/chrisx8/purduetriptimer/releases/latest)
+
 Purdue TripTimer is a Hello World 2020 project by [@aaryan-gautam](https://github.com/aaryan-gautam), [@afshirazi](https://github.com/afshirazi), [@chrisx8](https://github.com/chrisx8), and [@HenryWellman](https://github.com/HenryWellman). See more information on [Devpost](https://devpost.com/software/purdue-triptimer).
 
 Server-side implementation is at [chrisx8/purduetriptimer-server](https://github.com/chrisx8/purduetriptimer-server).
